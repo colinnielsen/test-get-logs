@@ -21,7 +21,7 @@ async function main() {
     "mainnet",
     "jRS2hx88znXIXy3NkZ90jU240p2hK-HE"
   );
-
+  console.time("getLogs");
   const logs = await provider.getLogs({
     fromBlock: 0,
     toBlock: "latest",
@@ -31,6 +31,8 @@ async function main() {
       TO ? toTopicString(TO) : null,
     ],
   });
+  console.time("getLogs");
+  console.timeLog("getLogs");
   console.log(logs.map((log) => log.address));
 }
 
