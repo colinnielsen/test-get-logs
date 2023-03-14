@@ -3,6 +3,7 @@ import { BytesLike, Contract, ethers, utils } from "ethers";
 
 const QUERY_ADDR =
   process.argv[2] ?? "0xe2B28b58cc5d34872794E861fd1ba1982122B907";
+const QUERY_ADDR_WITH_LABEL = QUERY_ADDR + " (input address)";
 const DIR = process.argv[3] === "<-" ? "<-" : "->";
 
 const EVENT = "OwnershipTransferred(address,address)";
@@ -37,8 +38,8 @@ async function main() {
 
     const addresses = logs.map((log) => ({
       partyAddress: log.address,
-      counterParty: QUERY_ADDR,
       relationship: "owner<-",
+      counterParty: QUERY_ADDR_WITH_LABEL,
     }));
 
     console.log(addresses);
@@ -52,8 +53,8 @@ async function main() {
       const owner = await contract.owner();
       console.log({
         partyAddress: owner,
-        counterParty: QUERY_ADDR,
         relationship: "owner->",
+        counterParty: QUERY_ADDR_WITH_LABEL,
       });
       return;
     } catch (e) {}
@@ -68,8 +69,8 @@ async function main() {
       console.log(
         owners.map((owner) => ({
           partyAddress: owner,
-          counterParty: QUERY_ADDR,
           relationship: "owner->",
+          counterParty: QUERY_ADDR_WITH_LABEL,
         }))
       );
       return;
